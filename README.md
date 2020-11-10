@@ -7,6 +7,8 @@
 
 It adapts first-order optimization methods to black-box functions by estimating the gradient with different approaches without the need of additional function evaluations. Further, it samples new starting points from multivariate probability distributions to escape local optima. It is a stochastic and sequential model-based optimization method (SMBO). Most SMBO techniques suffer from quadratic, cubic or even worse time complexities. This is caused by refitting the surrogate model without prior information. **grAdapt** establishes incremental learning and a sliding window technique to improve the complexity significantly. In stock settings, the runtime of **grAdapt** scales linearly with the number of function evaluations.
 
+Instead of establishing one optimization method, **grAdapt** is a modular package where the *sampling method, surrogate, optimizer, escape function, and the domain constraint* can be changed. This makes **grAdapt** very adaptable to many optimization problems and not only specifically to black-box optimization.
+
 Due to the fixed budget, it suits optimization problems with costly objectives. The most common application of **grAdapt** is hyperparameter optimization.
 
 It was started in 2019 by Manh Khoi Duong as a project and was since then continually developed, maintained by the author himself under the supervision of Martha Tatusch.
@@ -62,7 +64,8 @@ var3 = Float(low=-10, high=10)
 bounds = [var1, var2, var3]
 
 # minimize
-res = model.minimize(sphereMin, bounds, 100)
+n_evals = 100 # budget/number of function evaluations
+res = model.minimize(sphereMin, bounds, n_evals)
 
 # getting the history
 x = res['x']

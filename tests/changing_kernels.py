@@ -27,7 +27,8 @@ def test():
     print('Minimum found: {ymin}'.format(ymin=np.min(y)))
     
     # RationalQuadratic Test
-    gpr = GPR(kernel=RationalQuadratic())
+    kernel = RationalQuadratic()
+    gpr = GPR(kernel=kernel)
     model = Sequential(surrogate=gpr, random_state=1)
     bounds = [(-5, 5) for i in range(2)]
     res = model.minimize(rastrigin, bounds, 50, show_progressbar=False,

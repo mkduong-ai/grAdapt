@@ -20,9 +20,6 @@ from grAdapt.space.transformer import Transformer
 from grAdapt.sampling import initializer as init, equidistributed as equi
 
 
-# TODO: Integer/Categorical. Bounds is an object
-# TODO: Always get bounds from support?
-# TODO: PASS in Transformer
 class Sequential:
     def __init__(self, surrogate=None, optimizer=None, sampling_method=None,
                  initializer=None, escape=None,
@@ -32,8 +29,9 @@ class Sequential:
         ----------
         surrogate : grAdapt Surrogate object
         optimizer : grAdapt Optimizer object
-        escape : grAdapt Escape object
         sampling_method : Sampling Method to be used. static method from utils
+        initializer : grAdapt Initializer object
+        escape : grAdapt Escape object
         training : (X, y) with X shape (n, m) and y shape (n,)
         random_state : integer
             random_state integer sets numpy seed
