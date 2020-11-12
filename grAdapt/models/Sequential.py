@@ -47,6 +47,8 @@ class Sequential:
             self.optimizer = opt.AMSGradBisection(surrogate=self.surrogate)
         else:
             self.optimizer = optimizer
+            if surrogate is None:
+                raise Exception('If optimizer is passed, then surrogate must be passed, too.')
 
         if sampling_method is None:
             self.sampling_method = equi.MaximalMinDistance()
@@ -57,11 +59,15 @@ class Sequential:
             self.initializer = init.VerticesForceRandom(sampling_method=self.sampling_method)
         else:
             self.initializer = initializer
+            if sampling_method is None:
+                raise Exception('If initializer is passed, then sampling_method must be passed, too.')
 
         if escape is None:
             self.escape = esc.NormalDistributionDecay(surrogate=self.surrogate, sampling_method=self.sampling_method)
         else:
             self.escape = escape
+            if surrogate is None or sampling_method is None:
+                raise Exception('When passing an escape function, surrogate and sampling_method must be passed, too.')
 
         # continue optimizing
         self.training = training

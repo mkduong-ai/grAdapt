@@ -28,7 +28,11 @@ class Float(Datatype):
 
         # Exception handling
         if high < low:
-            raise ValueError("high must be higher than low.")
+            raise ValueError('high must be higher than low.')
+
+        if prior == 'log-uniform':
+            if low <= 0:
+                raise ValueError('If logarithmic prior is used, then low must be higher than 0.')
 
         self.low = low
         self.high = high
@@ -72,7 +76,7 @@ class Float(Datatype):
         """
         if self.prior == 'log-uniform':
             # Inverse transform sampling using quantile function
-            x_normalized = x/(self.high-self.low)
+            x_normalized = x / self.high
             return self.get_value(self.low * np.power(self.high * 1.0 / self.low, x_normalized))
         else:
             return self.get_value(x)
