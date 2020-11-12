@@ -31,6 +31,7 @@ setup(name='grAdapt',
           'scikit-learn ~= 0.22',
           'tqdm ~= 4.44',
           'numba ~=0.49',
-          'deprecated ~= 1.2.7'
+          'deprecated ~= 1.2.7',
+          
       ],
       )
