@@ -1,6 +1,6 @@
 from grAdapt.models import Sequential
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 from grAdapt.surrogate import GPR
 from grAdapt.surrogate.kernels import RationalQuadratic 
 
@@ -34,6 +34,6 @@ def main():
         test()
         print('Loading Checkpoint \t \t Ok.')
     except:
+        enablePrint()
         print('Loading Checkpoint \t \t Not Ok.')
-
 main()

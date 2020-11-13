@@ -13,10 +13,10 @@ def enablePrint():
 def timer(function):
     def new_function():
         start_time = time.time()
-        #blockPrint()
+        blockPrint()
         params = function()
         elapsed = time.time() - start_time
         print('Time elapsed: {time}'.format(time=elapsed))
-        #enablePrint()
+        enablePrint()
         return params
     return new_function

@@ -1,18 +1,13 @@
 import os
+import utils
 
-#print(os.getcwd())
-#for module in os.listdir(os.path.dirname(__file__)):
-
-# selecting all files
-files = []
-for (_, _, module) in os.walk("."):
-    files += module
-
+# add new test scripts here
+files = ['basic.py', 'changing_kernels.py', 'load_checkpoint.py', 'maximize.py', 'slidingWindow.py', 'training_continuation.py']
 
 # filter '.py' files endings
 filtered_files = []
 for file in files:
-    exclude_files = ['__init__.py', 'run_all.py', 'test.py'] 
+    exclude_files = ['__init__.py', 'run_all.py', 'test.py']
     exclude_file_extension = ['.pyc']
     
     if file in exclude_files:
@@ -29,7 +24,10 @@ for file in files:
 print(filtered_files)
 print(len(filtered_files))
 
-
 # import
+counter = 0
 for file in filtered_files:
-    __import__(file[:-3], locals(), globals())
+    mod = __import__(file[:-3], locals(), globals())
+    utils.enablePrint()
+    # out = mod.main()
+    # print(out)

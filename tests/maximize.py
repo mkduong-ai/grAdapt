@@ -1,6 +1,6 @@
 from grAdapt.models import Sequential
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 
 def sphereMax(x):
     return -np.sum(x**2)
@@ -40,5 +40,6 @@ def main():
         assert x1 == -x2
         print('Maximize \t \t \t Ok.')
     except:
+        enablePrint()
         print('Maximize \t \t \t Not Ok.')
 main()

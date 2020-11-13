@@ -121,6 +121,14 @@ class RBF(skRBF):
         if bounds is not None:
             self.length_scale = set_lengthscale(bounds)
 
+        self.__name__ = 'RBF'
+
+    def __str__(self):
+        return self.__class__.__name__
+
+    def __repr__(self):
+        return self.__class__.__name__
+
     def __call__(self, X, Y=None, eval_gradient=False):
         """Return the kernel k(X, Y) and optionally its gradient.
          @ docstring by scikit-learn
@@ -163,6 +171,14 @@ class RationalQuadratic(skRationalQuadratic):
         super().__init__()
         if bounds is not None:
             self.length_scale = set_lengthscale(bounds)
+
+        self.__name__ = 'RationalQuadratic'
+
+    def __str__(self):
+        return self.__class__.__name__
+
+    def __repr__(self):
+        return self.__class__.__name__
 
     def __call__(self, X, Y=None, eval_gradient=False):
         """Return the kernel k(X, Y) and optionally its gradient.

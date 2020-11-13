@@ -21,9 +21,7 @@ from grAdapt.utils.math.linalg import inv_stable
 
 
 class GPR(Surrogate):
-    # TODO: This class does not work with Nystroem Kernel
     """Gaussian Process Regression surrogate
-    Based on scikit-learn GaussProcessRegression.
     Implements various gradient calculations depending
     on the chosen kernel.
     """
@@ -46,6 +44,14 @@ class GPR(Surrogate):
 
     @abstractmethod
     def fit(self, X, y):
+        if len(X.shape) == 1:
+            X = X.reshape(1, -1)
+
+        kernel_matrix = self.kernel_function(X, X)
+        kernel_matrix_inv = inv_stable(kernel_matrix)
+        self.alpha = kernel_matrix_inv @ y
+
+    def fit_scikit(self, X, y):
         if len(X.shape) == 1:
             X = X.reshape(1, -1)
 

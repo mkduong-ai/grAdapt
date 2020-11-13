@@ -1,5 +1,5 @@
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 from grAdapt.models import Sequential
 from grAdapt.surrogate import GPR
 from grAdapt.surrogate.kernels import RationalQuadratic 
@@ -13,11 +13,9 @@ def sphereMin(x):
 
 @timer
 def test():
-    #gpr = GPR(kernel=RationalQuadratic())
-    #model = Sequential(surrogate=gpr)
     model = Sequential()
     bounds = [(-10, 10) for i in range(11)]
-    res = model.minimize(rastrigin, bounds, 100, show_progressbar=True)
+    res = model.minimize(rastrigin, bounds, 100, show_progressbar=False)
     x = res['x']
     y = res['y']
     print('Minimum found: {ymin}'.format(ymin=np.min(y)))
@@ -28,6 +26,6 @@ def main():
         test()
         print('Basic \t \t \t \t Ok.')
     except:
+        enablePrint()
         print('Basic \t \t \t \t Not Ok.')
-
 main()

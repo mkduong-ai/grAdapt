@@ -1,6 +1,6 @@
 from grAdapt.models import Sequential
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 from grAdapt.surrogate import GPR, GPRSlidingWindow, GPROnlineInsert
 from grAdapt.surrogate.kernels import Nystroem, RationalQuadratic, RBF
 
@@ -27,6 +27,6 @@ def main():
         test()
         print('Sliding Window \t \t \t Ok.')
     except:
+        enablePrint()
         print('Sliding Window \t \t \t Not Ok.')
-
 main()

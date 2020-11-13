@@ -1,6 +1,6 @@
 from grAdapt.models import Sequential
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 
 def rastrigin(x):
     x = np.array(x)
@@ -14,43 +14,33 @@ def test():
     model = Sequential()
     bounds = [(-10, 10) for i in range(10)]
     n = 25
-    res = model.minimize(sphere, bounds, n, show_progressbar=True)
+    res = model.minimize(sphere, bounds, n, show_progressbar=False)
     x = res['x']
     y = res['y']
-    # print(x[-1])
-    #print(x)
-    #print(y)
     print('Minimum found: {ymin}'.format(ymin=np.min(y)))
     # print('Argmin: {xmin}'.format(xmin=x[np.argmin(y)]))
     print('')
     print('Training continuation...')
     training = (x, y)
-    res = model.minimize(sphere, bounds, n, show_progressbar=True)
+    res = model.minimize(sphere, bounds, n, show_progressbar=False)
     x = res['x']
     y = res['y']
-    #print(x[-1])
-    print(x.shape)
-    print(y.shape)
-    print(x)
-    print(y)
     y_real = np.array(list(map(sphere, x)))
-    print(y_real)
     print('Minimum found: {ymin}'.format(ymin=np.min(y)))
     
-    if not (y_real == y).all():
+    if np.max(np.abs(y_real-y)) >= 1e-10:
+        print('Max single error: {}'.formatnp.max(np.abs(y_real-y)))
         raise Exception('y Values wrong and not equal!')
     
     if len(x) != 2*n:
         print(len(x))
         raise Exception('Training continuation FAILED.')
     
-    
-    #print('Argmin: {xmin}'.format(xmin=x[np.argmin(y)]))
-    
 def main():
     try:
         test()
         print('Training continuation \t \t Ok.')
     except:
+        enablePrint()
         print('Training continuation \t \t Not Ok.')
 main()

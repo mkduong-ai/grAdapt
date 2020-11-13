@@ -1,6 +1,6 @@
 from grAdapt.models import Sequential
 import numpy as np
-from utils import timer
+from utils import timer, enablePrint
 from grAdapt.surrogate import GPR, GPRSlidingWindow, GPROnlineInsert
 from grAdapt.surrogate.kernels import RationalQuadratic, RBF, Nystroem
 #import warnings
@@ -48,7 +48,7 @@ def test():
     print('Minimum found: {ymin}'.format(ymin=np.min(y)))
     
     # Nystroem Test
-    gpr = GPROnlineInsert(kernel=Nystroem(RBF))
+    gpr = GPROnlineInsert(kernel=Nystroem(RBF()))
     model = Sequential(surrogate=gpr, random_state=1)
     bounds = [(-5, 5) for i in range(2)]
     res = model.minimize(rastrigin, bounds, 50, show_progressbar=False,
@@ -82,11 +82,10 @@ def test():
 
     
 def main():
-    test()
     try:
         test()
         print('Changing kernels \t \t Ok.')
     except:
+        enablePrint()
         print('Changing kernels \t \t Not Ok.')
-
 main()

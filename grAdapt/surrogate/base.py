@@ -3,9 +3,6 @@
 from abc import abstractmethod
 
 
-# TODO: RBF Interpolation
-# TODO: Likelihood maximization for hyperparameters optimization (lengthscale and alpha)
-
 class Surrogate:
     """Surrogate model object for the regression
        

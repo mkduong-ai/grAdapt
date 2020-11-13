@@ -36,9 +36,13 @@ $ python setup.py install
 
 ### Testing
 
-To verify that the installation went well without any complications, go to the source directory and run:
+To verify that the installation went well without any complications, go to the source directory, then navigate to ```tests```
 ```
-$ python tests/run_all.py
+$ cd tests
+```
+ and run:
+```
+$ python run_all.py
 ```
 All tests should end with an OK.
 
