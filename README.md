@@ -35,7 +35,6 @@ $ python setup.py install
 ```
 
 ### Testing
-
 To verify that the installation went well without any complications, go to the source directory, then navigate to ```tests```
 ```
 $ cd tests
