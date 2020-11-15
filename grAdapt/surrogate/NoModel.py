@@ -1,6 +1,7 @@
 # Python Standard Libraries
 # decorators
 import warnings
+from deprecated import deprecated
 
 # Third party imports
 import numpy as np
@@ -72,6 +73,54 @@ class NoModel(Surrogate):
         surrogate_grad_params: list
             surrogate_grad_params[0]: whole training data shape (m, d)
 
+        Returns
+        -------
+        grad : 1D array-like
+            same shape as x
+        """
+        # x_train = surrogate_grad_params[0]
+        # y_train = surrogate_grad_params[1]
+        func = surrogate_grad_params[2]
+        bounds = surrogate_grad_params[3]
+
+        grad = np.zeros_like(x)
+        x_copy = np.copy(x)
+        # difference quotient
+        for i in range(x.shape[0]):
+            hi = np.min(np.array([np.abs(bounds[i][0]-bounds[i][1])/100, 1e-2]))
+            original_value = x[i]
+            x_tilde = x
+
+            # perturbation of xi with h
+            xi_perturbation = x_tilde[i] + hi
+            if not(bounds[i][0] <= xi_perturbation <= bounds[i][1]):
+                xi_perturbation = x_tilde[i] - hi
+                hi = -hi
+            x_tilde[i] = xi_perturbation
+
+            # gradient
+            if hi != 0:
+                dfdxi = (func(x_tilde)-func(x_copy))/hi
+            else:
+                dfdxi = 0
+
+            grad[i] = dfdxi
+
+            # revert back to original value
+            x_tilde[i] = original_value
+            x[i] = original_value
+
+        return grad
+
+    @deprecated("This function is deprecated and very slow due to np.copy")
+    def eval_gradient_deprecated(self, x, surrogate_grad_params):
+        """Evaluates the gradient of GPR at point x
+        Parameters
+        ----------
+        x: 1D array-like (d,)
+        surrogate_grad_params: list
+            surrogate_grad_params[0]: whole training data shape (m, d)
+
 
         Returns
         -------
@@ -89,15 +138,18 @@ class NoModel(Surrogate):
             hi = np.min(np.array([np.abs(bounds[i][0]-bounds[i][1])/100, 1e-2]))
             x_tilde = np.copy(x)
 
-            # pertubation of xi with h
-            xi_pertubation = x_tilde[i] + hi
-            if not(bounds[i][0] <= xi_pertubation <= bounds[i][1]):
-                xi_pertubation = x_tilde[i] - hi
+            # perturbation of xi with h
+            xi_perturbation = x_tilde[i] + hi
+            if not(bounds[i][0] <= xi_perturbation <= bounds[i][1]):
+                xi_perturbation = x_tilde[i] - hi
                 hi = -hi
-            x_tilde[i] = xi_pertubation
+            x_tilde[i] = xi_perturbation
 
             # gradient
-            dfdxi = (func(x_tilde)-func(x))/hi
+            if hi != 0:
+                dfdxi = (func(x_tilde)-func(x))/hi
+            else:
+                dfdxi = 0
 
             grad[i] = dfdxi
 

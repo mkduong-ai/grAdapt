@@ -297,6 +297,7 @@ class Sequential:
 
             # gradient parameters specific for the surrogate model
             surrogate_grad_params = [x_train[:iteration], y_train[:iteration], self.func, bounds]
+            # print(x_train[iteration-1])
             x_train[iteration] = self.optimizer.run(x_train[iteration - 1], grAdapt.utils.misc.epochs(iteration),
                                                     surrogate_grad_params)
 
