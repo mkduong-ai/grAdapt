@@ -4,7 +4,6 @@ import warnings
 
 # Third party imports
 import numpy as np
-# from numba import jit
 
 from grAdapt.utils.math.spatial import pairwise_distances
 

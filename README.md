@@ -1,7 +1,7 @@
 # grAdapt: Gradient-Adaptation for Black-Box Optimization
 
 
-![License](https://img.shields.io/badge/License-Apache%202.0-brightgreen) ![Python](https://img.shields.io/badge/Python-3.5%20%7C%203.6%20%7C%203.7%20%7C%203.8-yellowgreen)
+![License](https://img.shields.io/hexpm/l/plug?color=green&label=License&style=flat-square) ![Python](https://img.shields.io/pypi/pyversions/grAdapt?label=Python&style=flat-square)
 
 **grAdapt** is a Python package for black-box optimization with fixed budget. It is running on top of scikit-learn, scipy and numpy.
 

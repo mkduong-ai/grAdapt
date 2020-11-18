@@ -9,7 +9,6 @@ from pathlib import Path
 # fancy prints
 import numpy as np
 from tqdm import tqdm
-from numba.typed import List
 
 # grAdapt package
 import grAdapt.utils.math

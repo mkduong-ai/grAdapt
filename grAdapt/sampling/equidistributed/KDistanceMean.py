@@ -1,9 +1,6 @@
 # Python Standard Libraries
 import numpy as np
 
-# scikit
-from sklearn.neighbors import KDTree
-
 # grAdapt
 from .base import Equidistributed
 from grAdapt.utils.sampling import sample_points_bounds

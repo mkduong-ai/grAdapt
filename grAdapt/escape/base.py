@@ -1,14 +1,11 @@
 # Python Standard Libraries
-import numpy as np
+# import numpy as np
 # decorators
 from abc import abstractmethod
 
 # grAdapt package
 from grAdapt.utils.sampling import *
 from grAdapt.sampling.equidistributed import MaximalMinDistance
-
-# TODO: Acquisition functions for exploitations
-# TODO: REWORK Pass exploitation hyperparameters...
 
 
 class Escape:
