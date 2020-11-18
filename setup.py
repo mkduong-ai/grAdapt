@@ -4,7 +4,7 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setup(name='grAdapt',
-      version='0.1.1b4',
+      version='0.1.1b5',
       description='grAdapt: Gradient Adaption for Black-Box Optimization.',
       long_description=long_description,
       long_description_content_type='text/markdown',
@@ -14,9 +14,9 @@ setup(name='grAdapt',
       download_url = 'https://github.com/mkduong-ai/grAdapt/blob/master/dist/grAdapt-0.1.1b4.tar.gz?raw=true',
       keywords = ['grAdapt','black-box optimization', 'optimization', 'smbo', 'hyperparameter optimization', 'hyperparameter', 'sequential model-based optimization', 'stochastic optimization', 'global optimization', 'machine learning', 'toolbox'],
       license='Apache License 2.0',
-      # py_modules=['grAdapt'],
-      packages=find_packages(),
+      py_modules=['grAdapt'],
       # package_dir={'': 'src'},
+      # packages=find_packages(),
       classifiers=[
           'Programming Language :: Python :: 3.6',
           'Programming Language :: Python :: 3.7',
