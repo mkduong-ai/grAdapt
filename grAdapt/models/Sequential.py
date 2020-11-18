@@ -79,6 +79,7 @@ class Sequential:
             self.X = None
             self.y = None
 
+        # seed
         self.random_state = random_state
         np.random.seed(self.random_state)
 

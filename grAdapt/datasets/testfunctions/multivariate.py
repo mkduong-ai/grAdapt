@@ -61,7 +61,7 @@ def sphere_bounds(d):
     -------
 
     """
-    return [(-10, 10) for _ in range(d)]
+    return [(-10., 10.) for _ in range(d)]
 
 
 def sphere_ySol(d):
@@ -106,7 +106,7 @@ def rosenbrock_bounds(d):
     -------
 
     """
-    return [(-10, 10) for i in range(d)]
+    return [(-10., 10.) for i in range(d)]
 
 
 def rosenbrock_ySol(d):
@@ -136,7 +136,7 @@ def styblinski_bounds(d):
     -------
 
     """
-    return [(-5, 5) for _ in range(d)]
+    return [(-5., 5.) for _ in range(d)]
 
 
 def styblinski_ySol(d):
@@ -145,3 +145,13 @@ def styblinski_ySol(d):
 
 def styblinski_xSol(d):
     return np.ones((d,)) * -2.903534
+
+all_functions_string = ['rastrigin', 'sphere', 'rosenbrock', 'styblinski']
+
+all_functions = [eval(function_string) for function_string in all_functions_string]
+
+all_bounds = [eval(function_string+'_bounds') for function_string in all_functions_string]
+
+all_xSol = [eval(function_string+'_xSol') for function_string in all_functions_string]
+
+all_ySol = [eval(function_string+'_ySol') for function_string in all_functions_string]
