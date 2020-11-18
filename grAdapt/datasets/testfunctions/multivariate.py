@@ -146,6 +146,7 @@ def styblinski_ySol(d):
 def styblinski_xSol(d):
     return np.ones((d,)) * -2.903534
 
+
 all_functions_string = ['rastrigin', 'sphere', 'rosenbrock', 'styblinski']
 
 all_functions = [eval(function_string) for function_string in all_functions_string]

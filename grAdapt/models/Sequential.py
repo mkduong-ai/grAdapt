@@ -135,11 +135,15 @@ class Sequential:
         boolean
         """
         # x convergence
-        escape_convergence = (np.linalg.norm(x_train[iteration - 1] - x_train[iteration])) < self.eps
+        # escape_convergence = (np.linalg.norm(x_train[iteration - 1] - x_train[iteration])) < self.eps
+        n_hist = 2
+        escape_convergence_history = any((np.linalg.norm(x_train[iteration - n_hist:] - x_train[iteration], axis=1)) < self.eps)
+
         # check whether point is inside bounds
         escape_valid = not (grAdapt.utils.sampling.inside_bounds(self.bounds, x_train[iteration]))
 
-        escape_x = escape_convergence or escape_valid
+        # escape_x = escape_convergence or escape_valid
+        escape_x = escape_convergence_history or escape_valid
         return escape_x
 
     @staticmethod

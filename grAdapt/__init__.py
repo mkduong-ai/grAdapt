@@ -10,4 +10,4 @@ from . import surrogate
 from . import utils
 
 # attributes
-__version__ = '0.1.1b6'
+__version__ = '0.1.1b7'
