@@ -34,7 +34,7 @@ The nightly release can be installed by pulling this repository, navigating to t
 $ python setup.py install
 ```
 
-or alternatively (VCS Support):
+or alternatively (with VCS Support):
 ```
 $ pip install git+https://github.com/mkduong-ai/grAdapt.git
 ```
