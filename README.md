@@ -54,6 +54,7 @@ All tests should end with an OK.
 ## First start: Optimizing the sphere function
 
 ```python
+import numpy as np
 import grAdapt
 from grAdapt.models import Sequential
 from grAdapt.space.datatype import Integer, Float, Categorical
