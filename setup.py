@@ -4,7 +4,7 @@ with open('README.md', 'r') as fh:
     long_description = fh.read()
 
 setup(name='grAdapt',
-      version='0.1.1b7',
+      version='0.1.1b8',
       description='grAdapt: Gradient Adaption for Black-Box Optimization.',
       long_description=long_description,
       long_description_content_type='text/markdown',

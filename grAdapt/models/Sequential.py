@@ -22,7 +22,7 @@ from grAdapt.sampling import initializer as init, equidistributed as equi
 class Sequential:
     def __init__(self, surrogate=None, optimizer=None, sampling_method=None,
                  initializer=None, escape=None,
-                 training=None, random_state=1):
+                 training=None, random_state=1, bounds=None, parameters=None):
         """
         Parameters
         ----------
@@ -34,7 +34,19 @@ class Sequential:
         training : (X, y) with X shape (n, m) and y shape (n,)
         random_state : integer
             random_state integer sets numpy seed
+        bounds : list
+             list of tuples e.g. [(-5, 5), (-5, 5)]
+        parameters : dict
+            dictionary of parameter settings
+            e.g. {'bounds': None, 'n_evals': 'auto', 'eps': 1e-3, 'f_min': -np.inf, 'f_min_eps': 1e-2,
+                               'n_random_starts': 'auto', 'auto_checkpoint': False, 'show_progressbar': True,
+                               'prints': True}
+            All keys must be included
         """
+
+        # seed
+        self.random_state = random_state
+        np.random.seed(self.random_state)
 
         # Standard Values
         if surrogate is None:
@@ -78,9 +90,13 @@ class Sequential:
             self.X = None
             self.y = None
 
-        # seed
-        self.random_state = random_state
-        np.random.seed(self.random_state)
+        self.bounds = bounds
+        if parameters is None:
+            self.parameters = {'bounds': None, 'n_evals': 'auto', 'eps': 1e-3, 'f_min': -np.inf, 'f_min_eps': 1e-2,
+                               'n_random_starts': 'auto', 'auto_checkpoint': False, 'show_progressbar': True,
+                               'prints': True}
+        else:
+            self.parameters = parameters
 
         # results
         self.res = None
@@ -137,7 +153,8 @@ class Sequential:
         # x convergence
         # escape_convergence = (np.linalg.norm(x_train[iteration - 1] - x_train[iteration])) < self.eps
         n_hist = 2
-        escape_convergence_history = any((np.linalg.norm(x_train[iteration - n_hist:] - x_train[iteration], axis=1)) < self.eps)
+        escape_convergence_history = any(
+            (np.linalg.norm(x_train[iteration - n_hist:] - x_train[iteration], axis=1)) < self.eps)
 
         # check whether point is inside bounds
         escape_valid = not (grAdapt.utils.sampling.inside_bounds(self.bounds, x_train[iteration]))
@@ -168,7 +185,7 @@ class Sequential:
 
     def minimize(self, func, bounds, n_evals='auto', eps=1e-3, f_min=-np.inf, f_min_eps=1e-2, n_random_starts='auto',
                  auto_checkpoint=False, show_progressbar=True, prints=True):
-        """
+        """Minimize the objective func
 
         Parameters
         ----------
@@ -204,8 +221,8 @@ class Sequential:
         """
         # print('Optimizing ' + func.__name__)
         self.func = Transformer(func, bounds)
-        #self.bounds = List()  # Numba Typed List for performance
-        #[self.bounds.append((float(x[0]), float(x[1]))) for x in bounds]
+        # self.bounds = List()  # Numba Typed List for performance
+        # [self.bounds.append((float(x[0]), float(x[1]))) for x in bounds]
         self.bounds = bounds
         self.n_evals = int(n_evals)
         self.eps = eps
@@ -216,7 +233,7 @@ class Sequential:
         self.dim = len(bounds)
         self.prints = prints
 
-        if self.prints is False:
+        if not self.prints:
             sys.stdout = open(os.devnull, 'w')
         """n_evals value based on the probability of finding
         the optimal solution by coincidence
@@ -318,9 +335,12 @@ class Sequential:
             y_train[iteration] = self.func(x_train[iteration])
 
             # stop early
-
             if grAdapt.utils.misc.is_inside_relative_range(y_train[iteration], self.f_min, self.f_min_eps):
                 break
+
+            # global variables
+            self.X = x_train
+            self.X = y_train
 
             # auto_checkpoint
             if auto_checkpoint and time.perf_counter() - start_time >= 60:
@@ -343,7 +363,7 @@ class Sequential:
             self.save_checkpoint(self.res)
 
         # restore prints
-        if self.prints is False:
+        if not self.prints:
             sys.stdout = sys.__stdout__
 
         return self.res
@@ -383,7 +403,8 @@ class Sequential:
         return res
 
     def minimize_args(self, func, bounds, *args, **kwargs):
-        """
+        """If objective f takes multiple inputs instead of a vector
+        f(x1, x2, x3...)
 
         Parameters
         ----------
@@ -414,7 +435,8 @@ class Sequential:
         return res
 
     def maximize_args(self, func, bounds, *args, **kwargs):
-        """
+        """If objective f takes multiple inputs instead of a vector
+        f(x1, x2, x3...)
 
         Parameters
         ----------

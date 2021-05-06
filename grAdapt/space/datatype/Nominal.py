@@ -4,6 +4,8 @@ import numpy as np
 # grAdapt
 from .base import Datatype
 
+# TODO: test with Sequential model
+
 
 class Nominal(Datatype):
     """Nominal Datatype
